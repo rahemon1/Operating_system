@@ -1,0 +1,36 @@
+#include<stdio.h>
+int main(){
+int at[15],bt[15],ct[15],wt[15],tat[15],rt[15],start[15],i,n;
+printf("Enter the number of process:");
+scanf("%d",&n);
+
+printf("Enter burst time of all the processes:");
+for(i=0;i<n;i++)
+scanf("%d",&bt[i]);
+
+start[0]=0;
+ct[0]=start[0]+bt[0];
+
+for(i=1;i<n;i++){
+        start[i]=ct[i-1];
+    ct[i]=start[i]+bt[i];
+}
+
+float totalwt=0,totaltat=0,totalrt=0;
+for(i=0;i<n;i++){
+    tat[i]=ct[i];
+    wt[i]=tat[i]-bt[i];
+    rt[i]=start[i];
+
+    totalwt += wt[i];
+    totaltat += tat[i];
+    totalrt += rt[i];
+}
+printf("PNo.\tBT\tST\tCT\tTAT\tWT\tRT\n");
+for(i=0;i<n;i++)
+    printf("p[%d]\t%d\t%d\t%d\t%d\t%d\t%d\n",i+1,bt[i],start[i],ct[i],tat[i],wt[i],rt[i]);
+printf("Avg waiting time = %.2f\n",totalwt/n);
+printf("Avg turn around time = %.2f\n",totaltat/n);
+printf("Avg response time = %.2f\n",totalrt/n);
+return 0;
+}
